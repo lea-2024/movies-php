@@ -1,0 +1,119 @@
+*{
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+html{
+	scroll-behavior: smooth;
+	scrollbar-color: #9f3647 #333333;
+	scrollbar-width: thin;
+}
+
+body{
+	background-color: #333333;
+}
+
+header{
+	height: 70px;
+	background-color: #9f3647;
+	box-shadow: 0 0 5px 0 black;
+}
+
+main{
+	min-height:calc(100vh - 170px);
+	/*height: 82vh;*/
+	margin-top:120px;
+}
+
+.header_link{
+	color: whitesmoke;
+	text-decoration: none;
+	transition:color 500ms ease-in-out;
+}
+
+.header_link:hover{
+	color: rgb(239, 232, 177);
+}
+
+footer{
+	height:50px;
+	background-color: #9f3647;
+}
+
+.link_movie-add{
+	display: flex;
+	align-items: center;
+	gap:5px;
+	text-decoration: none;
+	color:whitesmoke;
+	padding: 10px 15px;
+	border-radius: 7px;
+	background-color: #9f3647;
+	transition: all 500ms ease-in-out;
+}
+
+.link_movie-add:hover{
+	background-color: #912839;
+	color:white;
+}
+
+.form-inputs{
+	padding: 8px;
+	background-color: #575555;
+	color:whitesmoke;
+	border:none;
+	box-shadow: 0 0 1px 3px #912839;
+}
+
+.form-inputs::placeholder{
+	color: #9f9e9e;
+}
+
+.form-inputs:focus-visible{
+	background-color: #494848;
+	color:whitesmoke;
+	--bs-focus-ring-color: #912839;
+}
+
+.text-pink{
+	color:pink;
+}
+
+.text-hover:hover{
+	opacity: 0.8;
+}
+
+.bg-card{
+	background-color: #575555;
+	color:whitesmoke;
+}
+
+.modal-preview{
+	scrollbar-width: thin;
+}
+.card-description{
+	height: 50px;
+}
+
+.link-delete{
+	background:transparent;
+	border: none;
+}
+
+input[type=checkbox]{
+	appearance: none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	vertical-align: middle;
+	width: 18px;
+	height: 18px;
+	border: 2px solid #9f3647;
+	background-color: dimgrey;
+}
+
+input[type=checkbox]:checked{
+	/*background-color: #9f3647;*/
+	background-image: url("../assets/img/check_18.png");
+	background-position: center;
+}
