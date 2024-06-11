@@ -61,7 +61,7 @@ footer{
 .form-inputs{
 	padding: 8px;
 	background-color: #575555;
-	color:whitesmoke;
+	color:#9f9e9e;
 	border:none;
 	box-shadow: 0 0 1px 3px #912839;
 }
@@ -113,7 +113,15 @@ input[type=checkbox]{
 }
 
 input[type=checkbox]:checked{
-	/*background-color: #9f3647;*/
 	background-image: url("../assets/img/check_18.png");
 	background-position: center;
 }
+
+.select{
+	appearance: none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	color:#9f9e9e;
+	background-image: url("../assets/img/arrow-down.svg");
+}
+

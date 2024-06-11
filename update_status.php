@@ -1,16 +1,17 @@
 <?php
-  $cookie_duration = 365 * 24 * 60 * 60;
-  session_set_cookie_params($cookie_duration);
-  session_start();
-  if(isset($_SESSION['peliculas'])){
-    $peliculas = $_SESSION['peliculas'];
-  }
+  global $pdo;
+  require './database/connection.php';
   
   if($_SERVER['REQUEST_METHOD'] == 'POST'){
-    $status = $_POST['status'];
-    $indice = $_POST['indice'];
+    $estado = intval($_POST['estado']);
+    $id = intval($_POST['id']);
     
-    $peliculas[$indice]['status'] = intval($status);
-    
-    $_SESSION['peliculas'] = $peliculas;
+    try{
+      $sql_update_estado = $pdo->prepare("UPDATE peliculas SET estado = :estado WHERE id_pelicula = :id");
+      $sql_update_estado->bindParam('estado',$estado);
+      $sql_update_estado->bindParam('id',$id);
+      $sql_update_estado->execute();
+    } catch (PDOException $e){
+      echo "Error al actualizar el estado: ".$e->getMessage();
+    }
   }

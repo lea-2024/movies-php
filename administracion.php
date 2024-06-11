@@ -1,27 +1,27 @@
 <?php
-  $cookie_duration = 365 * 24 * 60 * 60;
-  session_set_cookie_params($cookie_duration);
-  session_start();
-  if(isset($_SESSION['peliculas'])){
-    $peliculas = $_SESSION['peliculas'];
-  } else{
-    $peliculas = [];
+	require './database/connection.php';
+	
+	$sql_peliculas = "SELECT p.id_pelicula, p.nombre, p.descripcion, p.anio, p.calificacion, p.estado ,g.nombre as genero, d.nombre as nombre_director, d.apellido as apellido_director FROM peliculas as p INNER JOIN generos as g ON p.genero_id = g.id_genero INNER JOIN directores as d ON p.director_id = d.id_director";
+	
+  try {
+		$peliculas_query = $pdo->query($sql_peliculas);
+		$peliculas = $peliculas_query->fetchAll();
+  } catch (PDOException $e){
+		echo "Error al obtener las peliculas: ".$e->getMessage();
   }
-//	$peliculas_nuevas = array_push($peliculas,5);
-
+	
 	$title = 'Admin';
 	include './partials/header.php'; //Incluir header
 ?>
 
 <script>
-    const changeStatus = (indice) => {
-        let inputCheck = document.getElementById(`status${indice}`);
-        // document.getElementById('status').addEventListener('change',function (){
+    const changeStatus = (id) => {
+        let inputCheck = document.getElementById(`estado${id}`);
         let index = inputCheck.getAttribute('data-index');
-        let status = inputCheck.checked ? 1 : 0;
+        let estado = inputCheck.checked ? 1 : 0;
         const params = new URLSearchParams();
-        params.append('status', status);
-        params.append('indice', indice);
+        params.append('estado', estado);
+        params.append('id', id);
 
         fetch('update_status.php', {
             method: 'POST',
@@ -64,19 +64,19 @@
 							</tr>
 						</thead>
 						<tbody>
-						<?php foreach ($peliculas as $indice => $pelicula) : ?>
+						<?php foreach ($peliculas as $pelicula) : ?>
 						<tr>
-							<td class="text-center align-middle min-h-100" style="height:3rem"><?php echo $indice + 1 ?></td>
+							<td class="text-center align-middle min-h-100" style="height:3rem"><?php echo $pelicula['id_pelicula'] ?></td>
 							<td class="align-middle"><?php echo $pelicula['nombre'] ?></td>
 							<td class="align-middle"><?php echo $pelicula['descripcion'] ?></td>
 							<td class="align-middle"><?php echo $pelicula['genero']?></td>
 							<td class="text-center align-middle"><?php echo $pelicula['calificacion']?></td>
 							<td class="text-center align-middle"><?php echo $pelicula['anio']?></td>
-							<td class="align-middle"><?php echo $pelicula['director']?></td>
-							<td class="text-center align-middle"><input type="checkbox" id="status<?php echo $indice?>" onchange="changeStatus(<?php echo $indice?>)" name="status" <?php echo $pelicula['status'] == 1 ? 'checked' : '' ?> class="input-check"></td>
+							<td class="align-middle"><?php echo $pelicula['nombre_director'].' '.$pelicula['apellido_director']?></td>
+							<td class="text-center align-middle"><input type="checkbox" id="estado<?php echo $pelicula['id_pelicula']?>" onchange="changeStatus(<?php echo $pelicula['id_pelicula']?>)" name="estado" <?php echo $pelicula['estado'] == 1 ? 'checked' : '' ?> class="input-check"></td>
 							<td class="align-middle">
 								<div class="d-flex justify-content-center align-items-center gap-3">
-									<a role="button" data-bs-toggle="modal" data-bs-target="#pelicula<?php echo $indice + 1 ?>"><i class="fa-regular fa-eye bg-none text-light text-hover" title="Vista Previa"></i></a>
+									<a role="button" data-bs-toggle="modal" data-bs-target="#pelicula<?php echo $pelicula['id_pelicula'] ?>"><i class="fa-regular fa-eye bg-none text-light text-hover" title="Vista Previa"></i></a>
 									<a href="./update_form.php?i=<?php echo $indice?>"><i class="fa-regular fa-pen-to-square text-pink text-hover" title="Editar"></i></a>
 									<form action="./delete_movie.php" method="POST">
 										<input type="hidden" name="indice" value="<?php echo $indice?>">
@@ -87,8 +87,8 @@
 						</tr>
 							
 							
-							<!-- Modal -->
-							<div class="modal fade modal-preview" id="pelicula<?php echo $indice + 1 ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							<!-- Modal - Vista previa de card-->
+							<div class="modal fade modal-preview" id="pelicula<?php echo $pelicula['id_pelicula'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 								<div class="modal-dialog modal-dialog-centered">
 									<div class="modal-content bg-dark">
 										<div class="modal-header text-pink" style="background-color: #a94455;">
@@ -105,7 +105,7 @@
 													<p class="card-text"><?php echo str_repeat('⭐', intval($pelicula['calificacion'])) ?> </p>
 													<p class="card-text">Género: <?php echo $pelicula['genero']?></p>
 													<p>Año: <?php echo $pelicula['anio']?></p>
-													<p>Director: <?php echo $pelicula['director'] ?></p>
+													<p>Director: <?php echo $pelicula['nombre_director'].' '.$pelicula['apellido_director']?></p>
 												</div>
 											</div>
 										</div>
