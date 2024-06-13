@@ -26,46 +26,59 @@
 		<a href="./administracion.php" class="link_movie-add"><i class="fa-solid fa-caret-left"></i>Volver</a>
 	</div>
 	
-	<div class="row mt-5">
+	<div class="row mt-3">
 		<div class="col-md-6 offset-md-3">
-			<form action="./create_movie.php" method="POST">
-				<div class="col mb-4">
-					<input type="text" name="nombre" placeholder="Nombre" class="form-inputs form-control focus-ring">
+			<form action="./create_movie.php" method="POST" enctype="multipart/form-data">
+				<div class="col mb-3">
+					<label for="nombre" class="text-secondary mb-1">Nombre</label>
+					<input type="text" name="nombre" id="nombre" class="form-inputs form-control focus-ring">
 				</div>
-				<div class="col mb-4">
-					<textarea name="descripcion" cols="30" rows="3" placeholder="Descripción" class="form-inputs form-control focus-ring"></textarea>
+				<div class="col mb-3">
+					<label for="descripcion" class="text-secondary mb-1">Descripción</label>
+					<textarea name="descripcion" id="descripcion" cols="30" rows="3" class="form-inputs form-control focus-ring"></textarea>
 				</div>
-				<div class="col mb-4">
-					<select name="genero_id" class="form-inputs form-select focus-ring select">
-						<option value="" selected disabled>Genéro</option>
-						<?php foreach ($generos as $genero): ?>
-							<option value="<?php echo $genero['id_genero']?>"><?php echo $genero['nombre']?></option>
-						<?php endforeach; ?>
+				<div class="col mb-3">
+					<label for="genero" class="text-secondary mb-1">Género</label>
+					<select name="genero_id" id="genero" class="form-inputs form-select focus-ring select">
+						<option value="" selected disabled>Selecione una opción</option>
+            <?php foreach ($generos as $genero) : ?>
+							<option value="<?php echo $genero['id_genero'] ?>">
+                <?php echo $genero['nombre'] ?></option>
+            <?php endforeach; ?>
 					</select>
 				</div>
-				<div class="row mb-4">
+				<div class="row mb-3">
 					<div class="col col-md-6">
-						<input name="anio" type="number" placeholder="Año de estreno" min="0" minlength="4" class="form-inputs form-control focus-ring">
+						<label for="anio" class="text-secondary mb-1">Año</label>
+						<input name="anio" type="number" id="anio" min="0" minlength="4" class="form-inputs form-control focus-ring">
 					</div>
 					<div class="col col-md-6">
-						<select name="calificacion" class="form-inputs form-select focus-ring select">
-							<option value="" selected disabled>Calificación</option>
-							<option value="1">1</option>
-							<option value="2">2</option>
-							<option value="3">3</option>
-							<option value="4">4</option>
-							<option value="5">5</option>
+						<label for="calificacion" class="text-secondary mb-1">Calificación</label>
+						<select name="calificacion" id="calificacion" class="form-inputs form-select focus-ring select">
+							<option value="" selected disabled>Seleccione una opción</option>
+              <?php for($i=1; $i<=5; $i++):?>
+								<option value="<?php echo $i?>"><?php echo $i?></option>
+              <?php endfor ?>
 						</select>
 					</div>
 				</div>
-				<div class="col mb-4">
-					<select name="director_id" class="form-inputs form-select focus-ring select">
-						<option value="" selected disabled>Director</option>
-						<?php foreach ($directores as $director):?>
-							<option value="<?php echo $director['id_director']?>"><?php echo $director['nombre'].' '.$director['apellido'] ?></option>
-						<?php endforeach;?>
-					</select>
+				<div class="row align-items-center mb-5">
+					<div class="col-md-6">
+						<label for="director" class="text-secondary mb-1">Director</label>
+						<select name="director_id" id="director" class="form-inputs form-select focus-ring select">
+							<option value="" class="text-secondary" selected disabled>Seleccione una opción</option>
+	            <?php foreach ($directores as $director) : ?>
+								<option value="<?php echo $director['id_director']?>">
+	                <?php echo $director['nombre'] . ' ' . $director['apellido'] ?></option>
+	            <?php endforeach; ?>
+						</select>
+					</div>
+					<div class="col-md-6">
+						<label for="image" class="btn-imagen"><i class="fa-regular fa-image me-2"></i>Subir imágen</label>
+						<input type="file" name="image" id="image" class="d-none" accept="image/jpg, image/jpeg, image/png, image/svg">
+					</div>
 				</div>
+				<div id="imagePreview" class="col"></div>
 				<input type="submit" value="Guardar" class="link_movie-add mb-5 border-0 w-100 justify-content-center">
 			</form>
 		</div>

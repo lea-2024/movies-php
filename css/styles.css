@@ -61,18 +61,14 @@ footer{
 .form-inputs{
 	padding: 8px;
 	background-color: #575555;
-	color:#9f9e9e;
+	color:whitesmoke;
 	border:none;
 	box-shadow: 0 0 1px 3px #912839;
 }
 
-.form-inputs::placeholder{
-	color: #9f9e9e;
-}
-
 .form-inputs:focus-visible{
 	background-color: #494848;
-	color:whitesmoke;
+	color: white;
 	--bs-focus-ring-color: #912839;
 }
 
@@ -121,7 +117,43 @@ input[type=checkbox]:checked{
 	appearance: none;
 	-webkit-appearance: none;
 	-moz-appearance: none;
-	color:#9f9e9e;
+	color:whitesmoke;
 	background-image: url("../assets/img/arrow-down.svg");
 }
 
+.btn-imagen{
+	width: 100%;
+	padding:10px;
+	text-align: center;
+	margin-top:1.8rem;
+	background-color: #ab3f51;
+	border-radius: 7px;
+	cursor: pointer;
+	transition: background-color 500ms ease-in-out;
+}
+
+.btn-imagen:hover{
+	background-color: #912839;
+	color:whitesmoke;
+}
+
+/* Imagen vista previa antes de guardar */
+.image-preview{
+	width: 100%;
+	object-fit: cover;
+	border-radius: 7px;
+	margin-bottom: 50px;
+}
+
+/* Imágen vista tabla */
+
+.table-image{
+	width: 50px;
+	height: 50px;
+	object-fit: cover;
+}
+
+/* Mostrar cursor pointer en la columna de la imagen */
+.table-image{
+	cursor:pointer;
+}
